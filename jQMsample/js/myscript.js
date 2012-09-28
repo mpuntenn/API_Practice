@@ -45,23 +45,27 @@ function listTweets(data){
 	output += '</ul>';
 	$('#tweetlist').html(output);
 }
+var latitude = null;
+var longitude = null;
 
-    console.log("Map is:",map);
 function initialize() 
 {
 	var mapOptions = 
 	{
-    	zoom: 15,
-    	center: new google.maps.LatLng(39.079591, -108.554172),
-   		mapTypeId: google.maps.MapTypeId.SATELLITE
-	};
-        
+    	    zoom: 15,
+    	    center: new google.maps.LatLng(39.079591, -108.554172),
+   	    mapTypeId: google.maps.MapTypeId.SATELLITE
+	};        
 	map = new google.maps.Map(document.getElementById('map_canvas'),mapOptions);
-	console.log("Map is:",map);
 	google.maps.event.addListener(map, 'click', function(e)
 	{
-    	placeMarker(e.latLng, map);
-    });	  
+    	    placeMarker(e.latLng, map);
+	    //Get the latitude and longitude of the clicked object and store them
+	    latitude = e.latLng.lat().toString();
+	    longitude = e.latLng.lng().toString();
+	    //Output this latitude and longitude to the user
+	    disp_lat_lng();
+    	});	  
 }
 function placeMarker(position, map) 
 {
@@ -72,9 +76,8 @@ function placeMarker(position, map)
 	});
     map.panTo(position);
 }
-var lat_long = function getlat_long()
+function disp_lat_lng()
 {
-	return map;	
+   console.log(latitude+", "+longitude);  	
+   $("#loc_box").text("Last point clicked: "+latitude+", "+longitude);
 }
-
-console.log(lat_long());
